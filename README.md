@@ -16,7 +16,7 @@ CSS (SCSS): Styling is done using SCSS, providing flexibility and maintainabilit
 JavaScript (ES6+): Modern JavaScript features are used throughout the application for enhanced functionality.
 GitHub: The project is hosted on GitHub, providing version control and collaboration features.
 Usage:
-Clone the repository: git clone https://https://github.com/xmNuc/film-credits/
+Clone the repository: git clone gttps://github.com/xmNuc/film-credits/
 Navigate to the project directory: cd film-credits
 Install dependencies: npm install or yarn
 Run the application: npm start or yarn dev
