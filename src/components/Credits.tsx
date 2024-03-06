@@ -29,7 +29,7 @@ export const Credits = () => {
           <img src={reactLogo} className="credits-logo" alt="Logo" />
           <div className="credits-created-by">CREDITS CREATED BY</div>
           <div className="credits-team" onClick={() => handleEmailClick('xmnuc@o2.pl')}>
-            JAKUB DZIECIOŁOWSKI - xmNuc on github
+            JAKUB DZIĘCIOŁOWSKI - xmNuc on github
           </div>
           <div>Test imaginary characters:</div>
           {team.map(({ name, position, email }, index) => (
