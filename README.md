@@ -7,5 +7,5 @@ React + TypeScript + SCSS +  Vite
 
 How to start:
 copy code,
-yarn - command in terminal,
+yarn - command in terminal to instal dependencies,
 yarn dev - to start.
