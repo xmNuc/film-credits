@@ -20,6 +20,11 @@
     position: relative;
     animation: movieText 30s infinite linear;
     text-shadow: 0 0 20px #0e9af7, 0 0 30px #32acfd;
+
+    &.paused {
+      animation-play-state: paused;
+    }
+
     .credits-logo {
       margin-bottom: 100px;
       height: 6em;
@@ -30,10 +35,12 @@
         filter: drop-shadow(0 0 40px #7fd0ffaa);
       }
     }
+
     .credits-created-by {
       margin-bottom: 20px;
       font-size: 26px;
     }
+
     .credits-team {
       margin-bottom: 50px;
       &:hover {
@@ -42,21 +49,24 @@
         text-shadow: 0 0 20px #bfedff, 0 0 60px #6adcff;
       }
     }
+
     .credits-teammates {
       display: flex;
       align-items: center;
       margin: 14px;
       &:hover {
-        cursor: default;
+        cursor: pointer;
         color: #adf3ff;
         text-shadow: 0 0 20px #bfedff, 0 0 60px #6adcff;
       }
     }
+
     .credits-position {
       font-size: 30px;
       margin: 0 2px;
       padding-right: 50px;
     }
+
     .credits-name {
       margin: 0 2px;
     }
@@ -76,6 +86,7 @@
     height: 100%;
     pointer-events: none;
     z-index: -1;
+
     .rain-drop {
       position: absolute;
       width: 2px;
@@ -102,6 +113,7 @@
       transform: translateY(100vh);
     }
   }
+
   @keyframes movieText {
     0% {
       transform: translateY(51%);

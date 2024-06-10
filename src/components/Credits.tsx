@@ -1,7 +1,17 @@
+import React, { useState, useRef } from 'react';
 import reactLogo from '../assets/react.svg';
 
-export const Credits = () => {
-  const team = [
+interface TeamMember {
+  name: string;
+  position: string;
+  email: string;
+}
+
+export const Credits: React.FC = () => {
+  const [isPaused, setIsPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const team: TeamMember[] = [
     { name: 'Alice Smith', position: 'Product owner', email: 'alice@example.xd' },
     { name: 'Bob Johnson', position: 'System Administrator', email: 'bob100@tester.com' },
     { name: 'Charlie Brown', position: 'Designer', email: 'alice@example.xd' },
@@ -19,16 +29,23 @@ export const Credits = () => {
   ];
 
   const handleEmailClick = (email: string) => {
-    window.location.href = `mailto:${email}`;
+    if (email) {
+      window.location.href = `mailto:${email}`;
+    }
   };
 
   return (
     <div className="credits">
       <div className="credits-rain">
-        <div className="credits-container">
+        <div className={`credits-container ${isPaused ? 'paused' : ''}`} ref={containerRef}>
           <img src={reactLogo} className="credits-logo" alt="Logo" />
           <div className="credits-created-by">CREDITS CREATED BY</div>
-          <div className="credits-team" onClick={() => handleEmailClick('xmnuc@o2.pl')}>
+          <div
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            className="credits-team"
+            onClick={() => handleEmailClick('xmnuc@o2.pl')}
+          >
             JAKUB DZIĘCIOŁOWSKI - xmNuc on github
           </div>
           <div>Test imaginary characters:</div>
@@ -36,8 +53,15 @@ export const Credits = () => {
             <div
               key={index}
               className="credits-teammates"
-              onClick={() => {
-                handleEmailClick(email);
+              onClick={() => handleEmailClick(email)}
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+              role="button"
+              tabIndex={0}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleEmailClick(email);
+                }
               }}
             >
               <span className="credits-position">{position}</span>
