@@ -1,11 +1,11 @@
 // import { Credits } from './components/Credits';
-import VerticalList from './components/VerticaList';
+import { Credits } from './components/Credits';
 
 function App() {
   return (
     <>
-      {/* <Credits /> */}
-      <VerticalList />
+      <Credits />
+      {/* <VerticalList /> */}
     </>
   );
 }
