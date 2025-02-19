@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Credits } from './Credits';
+import userEvent from '@testing-library/user-event';
+import Credits from './Credits';
 
 describe('Credits Component', () => {
   test('renders component correctly', () => {
@@ -34,14 +35,14 @@ describe('Credits Component', () => {
     });
   });
 
-  test('pauses animation on hover', () => {
+  test('pauses animation on hover', async () => {
     render(<Credits />);
     const creditContainer = screen.getByText('JAKUB DZIĘCIOŁOWSKI - xmNuc on github');
 
-    userEvent.mouseEnter(creditContainer);
+    await userEvent.hover(creditContainer);
     expect(creditContainer.closest('.credits-container')).toHaveClass('paused');
 
-    fireEvent.mouseLeave(creditContainer);
+    await userEvent.unhover(creditContainer);
     expect(creditContainer.closest('.credits-container')).not.toHaveClass('paused');
   });
 
@@ -49,10 +50,15 @@ describe('Credits Component', () => {
     render(<Credits />);
     const member = screen.getByText('Alice Smith');
 
+    // Mock window.location
+    const originalLocation = window.location;
     delete window.location;
-    window.location = { href: '' };
+    window.location = { assign: jest.fn() } as any;
 
     fireEvent.click(member);
-    expect(window.location.href).toBe('mailto:alice@example.xd');
+    expect(window.location.assign).toHaveBeenCalledWith('mailto:alice@example.xd');
+
+    // Restore window.location
+    window.location = originalLocation;
   });
 });

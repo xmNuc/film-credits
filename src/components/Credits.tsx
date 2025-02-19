@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import reactLogo from '../assets/react.svg';
 
 interface TeamMember {
@@ -7,7 +7,7 @@ interface TeamMember {
   email: string;
 }
 
-export const Credits: React.FC = () => {
+export const Credits = () => {
   const [isPaused, setIsPaused] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -79,3 +79,4 @@ export const Credits: React.FC = () => {
     </div>
   );
 };
+export default Credits;
