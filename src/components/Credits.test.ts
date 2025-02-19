@@ -58,7 +58,6 @@ describe('Credits Component', () => {
     fireEvent.click(member);
     expect(window.location.assign).toHaveBeenCalledWith('mailto:alice@example.xd');
 
-    // Restore window.location
     window.location = originalLocation;
   });
 });
