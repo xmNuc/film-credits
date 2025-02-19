@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Credits from './Credits';
+import '@testing-library/jest-dom';
+import { Credits } from './Credits';
 
 describe('Credits Component', () => {
   test('renders component correctly', () => {
@@ -50,14 +51,14 @@ describe('Credits Component', () => {
     render(<Credits />);
     const member = screen.getByText('Alice Smith');
 
-    // Mock window.location
     const originalLocation = window.location;
-    delete window.location;
-    window.location = { assign: jest.fn() } as any;
+    Object.defineProperty(window, 'location', {
+      writable: true,
+      value: { href: '' },
+    });
+    window.location = originalLocation;
 
     fireEvent.click(member);
     expect(window.location.assign).toHaveBeenCalledWith('mailto:alice@example.xd');
-
-    window.location = originalLocation;
   });
 });
