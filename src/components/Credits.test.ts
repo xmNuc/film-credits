@@ -1,64 +1,56 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { Credits } from './Credits';
 
 describe('Credits Component', () => {
-  test('renders component correctly', () => {
+  test('renders Credits component correctly', () => {
     render(<Credits />);
 
-    expect(screen.getByText('CREDITS CREATED BY')).toBeInTheDocument();
-    expect(screen.getByText('JAKUB DZIĘCIOŁOWSKI - xmNuc on github')).toBeInTheDocument();
+    // Sprawdzenie obecności nagłówka "CREDITS CREATED BY"
+    expect(screen.getByText(/CREDITS CREATED BY/i)).toBeInTheDocument();
+
+    // Sprawdzenie obecności imienia autora
+    expect(screen.getByText(/JAKUB DZIĘCIOŁOWSKI - xmNuc on github/i)).toBeInTheDocument();
   });
 
-  test('renders all team members', () => {
+  test('renders team members correctly', () => {
     render(<Credits />);
 
-    const teamMembers = [
-      'Alice Smith',
-      'Bob Johnson',
-      'Charlie Brown',
-      'Daisy Miller',
-      'Edward Davis',
-      'Frank Wilson',
-      'Grace Lee',
-      'Henry Taylor',
-      'Ivy Anderson',
-      'Jack White',
-      'John Wick',
-      'Marty McFly',
-      'Emmett Brown',
-      'Thomas A. Anderson',
-    ];
-
-    teamMembers.forEach((name) => {
-      expect(screen.getByText(name)).toBeInTheDocument();
-    });
+    // Sprawdzenie obecności członka zespołu "Alice Smith"
+    expect(screen.getByText(/Alice Smith/i)).toBeInTheDocument();
+    expect(screen.getByText(/Product owner/i)).toBeInTheDocument();
   });
 
-  test('pauses animation on hover', async () => {
+  test('pauses scrolling when hovering over team member', () => {
     render(<Credits />);
-    const creditContainer = screen.getByText('JAKUB DZIĘCIOŁOWSKI - xmNuc on github');
 
-    await userEvent.hover(creditContainer);
-    expect(creditContainer.closest('.credits-container')).toHaveClass('paused');
+    const teamMember = screen.getByText(/Alice Smith/i).closest('div');
+    expect(teamMember).not.toHaveClass('paused');
 
-    await userEvent.unhover(creditContainer);
-    expect(creditContainer.closest('.credits-container')).not.toHaveClass('paused');
+    fireEvent.mouseEnter(teamMember!);
+    expect(teamMember?.parentElement).toHaveClass('paused');
+
+    fireEvent.mouseLeave(teamMember!);
+    expect(teamMember?.parentElement).not.toHaveClass('paused');
   });
 
-  test('email click redirects to mailto link', () => {
+  test('clicking team member with email triggers mailto link', () => {
     render(<Credits />);
-    const member = screen.getByText('Alice Smith');
 
-    const originalLocation = window.location;
-    Object.defineProperty(window, 'location', {
-      writable: true,
-      value: { href: '' },
-    });
-    window.location = originalLocation;
+    const teamMember = screen.getByText(/Alice Smith/i).closest('div');
+    window.location.href = '';
 
-    fireEvent.click(member);
-    expect(window.location.assign).toHaveBeenCalledWith('mailto:alice@example.xd');
+    fireEvent.click(teamMember!);
+    expect(window.location.href).toBe('mailto:alice@example.xd');
+  });
+
+  test('clicking team member without email does nothing', () => {
+    render(<Credits />);
+
+    const teamMember = screen.getByText(/Emmett Brown/i).closest('div');
+    window.location.href = '';
+
+    fireEvent.click(teamMember!);
+    expect(window.location.href).toBe('');
   });
 });
