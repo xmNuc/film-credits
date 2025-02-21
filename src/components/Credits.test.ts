@@ -6,17 +6,14 @@ describe('Credits Component', () => {
   test('renders Credits component correctly', () => {
     render(<Credits />);
 
-    // Sprawdzenie obecności nagłówka "CREDITS CREATED BY"
     expect(screen.getByText(/CREDITS CREATED BY/i)).toBeInTheDocument();
 
-    // Sprawdzenie obecności imienia autora
     expect(screen.getByText(/JAKUB DZIĘCIOŁOWSKI - xmNuc on github/i)).toBeInTheDocument();
   });
 
   test('renders team members correctly', () => {
     render(<Credits />);
 
-    // Sprawdzenie obecności członka zespołu "Alice Smith"
     expect(screen.getByText(/Alice Smith/i)).toBeInTheDocument();
     expect(screen.getByText(/Product owner/i)).toBeInTheDocument();
   });
