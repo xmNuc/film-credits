@@ -1,7 +1,7 @@
 module.exports = {
-  transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest'],
-  },
+  preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  transform: {
+    '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest',
+  },
 };
